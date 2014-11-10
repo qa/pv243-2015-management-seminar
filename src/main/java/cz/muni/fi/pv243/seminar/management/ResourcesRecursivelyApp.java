@@ -39,12 +39,15 @@ public class ResourcesRecursivelyApp {
         ModelControllerClient client = ModelControllerClient.Factory.create(InetAddress.getByName("localhost"), 9990);
 
         ModelNode op = new ModelNode();
+        op.get("operation").set("read-resource");
 
-        // set command
+        op.get("recursive").set(true);
+        op.get("include-runtime").set(true);
+        op.get("recursive-depth").set(10);
 
         ModelNode returnVal = client.execute(op);
 
-        // display results
+        System.out.println(returnVal.get("result").toString());
 
         client.close();
     }
